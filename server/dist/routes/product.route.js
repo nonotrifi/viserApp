@@ -7,5 +7,8 @@ const express_1 = require("express");
 const product_controller_1 = __importDefault(require("../controllers/product.controller"));
 const router = (0, express_1.Router)();
 router.get('/', product_controller_1.default.getAll);
+router.get('/:productId', product_controller_1.default.getOne);
 router.post('/', product_controller_1.default.create);
+router.put('/:id', product_controller_1.default.update);
+router.delete('/:id', product_controller_1.default.delete);
 exports.default = router;

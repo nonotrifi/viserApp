@@ -20,13 +20,25 @@ const productController = {
         return res.json(products);
     }),
     getOne: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const product = yield product_model_1.default.findById(req.params.id);
-        return res.json(product);
+        console.log("Hello");
+        const products = yield product_model_1.default.findById(req.params.productId);
+        console.log('products ->', products);
+        return res.json(products);
     }),
     create: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const product = new product_model_1.default(req.body);
         yield product.save();
         return res.json(product);
+    }),
+    update: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const product = yield product_model_1.default.findByIdAndUpdate(req.params.productId, req.body, {
+            new: true
+        });
+        return res.json(product);
+    }),
+    delete: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        yield product_model_1.default.findByIdAndDelete(req.params.id);
+        return res.json({ message: 'Deleted' });
     }),
 };
 exports.default = productController;

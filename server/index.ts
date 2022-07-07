@@ -2,6 +2,7 @@ import express, {Response, Request} from 'express';
 import mongoose from "mongoose";
 import  dotenv from 'dotenv';
 import productRouter from "./routes/product.route";
+import userRouter from "./routes/user.route";
 
 //  DotEnv is a lightweight npm package that automatically loads environment variables from a . env file into the process. env object.
 dotenv.config();
@@ -15,7 +16,8 @@ app.use(express.json());
 
 // le premier paramètre il prend le chemin
 app.use('/api/products', productRouter);
-console.log("typeof =" +typeof(productRouter));
+app.use('/api/users', userRouter);
+
 // app.use('/', (req: Request,res: Response) => {
 //     res.send('Hello World');
 // });
