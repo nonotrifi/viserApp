@@ -41,6 +41,7 @@ const userSchema = new mongoose.Schema({
         default: RoleEnum.USER,
         required: true
     }
-});
+}
+);
 
 export default mongoose.model("User", userSchema);

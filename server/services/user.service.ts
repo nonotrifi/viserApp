@@ -8,6 +8,7 @@ import jsonwebtoken from 'jsonwebtoken';
 const userService = {
     getAll: async (res: Response) => {
         try {
+
             const users = await User.find();
             return res.json(users);
         } catch (err){
@@ -18,10 +19,13 @@ const userService = {
     signUp: async (req: Request, res: Response) => {
         try {
             const user = new User({
+                // il spread l'objet (découpe l'objet)
                 ...req.body,
+                // 1234 va remplacer ce password par un password hasher
                 password: userService.hashPassword(req.body.password),
             });
             await user.save();
+            // manque une secu si le save a echoué
             return res.json(user);
         } catch (err:any){
             if (err.code === 11000) {
@@ -39,14 +43,14 @@ const userService = {
     signIn: async (req: Request, res: Response) => {
         try {
             const user = await User.findOne({ email: req.body.email });
-            if(!user){
+            if (!user) {
                 return res.status(404).json({message: 'User not found'});
             }
             const isValid = await userService.comparePassword(
                 req.body.password,
                 user.password,
             );
-            if(!isValid){
+            if (!isValid) {
                 return res.status(401).json({ message: 'Invalid password'});
             }
             // create a jwt token
@@ -66,17 +70,24 @@ const userService = {
     comparePassword: async (
         password: string,
         hashedPassword: string,
-    ): Promise<boolean> => bcrypt.compare(password, hashedPassword),
+    ): Promise<boolean> => bcrypt.compare(password, hashedPassword)
+    // const inputHash = bcrypt.hash(password) puis if (inputHash === hashedPassword) si true connexion else pas connexion
 };
 
 export default userService;
 
-
+// Qu'est ce qu'une callback ?
 // pq c'est toujours des constantes ?
 // il sert a quoi le defaut, pq on met default ?
 // hashSync, bcrypt ?
 // ...req.body ?
+// erreur 1100 mangoose ?
 // pq c'est getAll ce n'est qu'une Response et signUp req et res
 // pq le role c'est fait ainsi ROLE = 'ROLE'
-// Comment avoir l'erreur 500 pour le signin ? pourquoi l'erreur reste 404
-// Le token comprendre ce que c'est exactement
+// Qu'est ce que le token exactement ?
+
+// Qu'est ce qu'une reference ?
+
+// Différence entre restAPI et API
+
+// timestamps ?
