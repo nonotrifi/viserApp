@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_service_1 = __importDefault(require("../services/user.service"));
 const userController = {
-    getAll: (req, res) => user_service_1.default.getAll(res),
+    getAll: (req, res) => { user_service_1.default.getAll(res); },
     signUp: (req, res) => user_service_1.default.signUp(req, res),
     signIn: (req, res) => user_service_1.default.signIn(req, res),
 };

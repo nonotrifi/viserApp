@@ -1,34 +1,16 @@
-import Product from "../models/product.model";
 import {Request, Response} from "express";
+import productService from "../services/products.service";
+
 
 const productController = {
-    getAll: async (req: Request, res: Response) => {
-        console.log("req => " + req);
-        const products = await Product.find();
-        return res.json(products);
-    },
-    getOne: async (req: Request, res: Response) => {
-        console.log("Hello");
-        const products = await Product.findById(req.params.productId); 
-        console.log('products ->', products)
-        
-        return res.json(products);
-    },
-    create: async (req: Request, res: Response) => {
-        const product = new Product(req.body);
-        await product.save();
-        return res.json(product);
-    },
-    update: async (req: Request, res: Response) => {
-        const product = await Product.findByIdAndUpdate(req.params.productId, req.body, {
-            new: true
-        });
-        return res.json(product);
-    },
-    delete: async (req: Request, res: Response) => {
-        await Product.findByIdAndDelete(req.params.id);
-        return res.json({message: 'Deleted'});
-    },
+    getAll: (req: Request, res: Response) => { return productService.getProducts(res)}, // readAll
+    getOne: (req: Request, res: Response) => { return productService.getProduct(req, res) }, // get / read
+    create: (req: Request, res: Response) => { return productService.createProduct(req, res)},
+    update: (req: Request, res: Response) => { return productService.updateProduct(req, res)},
+    delete: (req: Request, res: Response) => { return productService.deleteProduct(req, res)},
 };
 
 export default productController;
+
+// pq ici on a req, res alors que dans getProducts que res ?
+// pq pas asynchrone ? psk c'est le résultat est dores et dejé retourner donc pas besoin de fonction asynchrone

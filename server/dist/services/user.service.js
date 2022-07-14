@@ -29,8 +29,11 @@ const userService = {
     }),
     signUp: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const user = new user_model_1.default(Object.assign(Object.assign({}, req.body), { password: userService.hashPassword(req.body.password) }));
+            const user = new user_model_1.default(Object.assign(Object.assign({}, req.body), { 
+                // 1234 va remplacer ce password par un password hasher
+                password: userService.hashPassword(req.body.password) }));
             yield user.save();
+            // manque une secu si le save a echoué
             return res.json(user);
         }
         catch (err) {
@@ -67,14 +70,19 @@ const userService = {
         ;
     }),
     hashPassword: (password) => bcrypt_1.default.hashSync(password, 10),
-    comparePassword: (password, hashedPassword) => __awaiter(void 0, void 0, void 0, function* () { return bcrypt_1.default.compare(password, hashedPassword); }),
+    comparePassword: (password, hashedPassword) => __awaiter(void 0, void 0, void 0, function* () { return bcrypt_1.default.compare(password, hashedPassword); })
+    // const inputHash = bcrypt.hash(password) puis if (inputHash === hashedPassword) si true connexion else pas connexion
 };
 exports.default = userService;
+// Qu'est ce qu'une callback ?
 // pq c'est toujours des constantes ?
 // il sert a quoi le defaut, pq on met default ?
 // hashSync, bcrypt ?
 // ...req.body ?
+// erreur 1100 mangoose ?
 // pq c'est getAll ce n'est qu'une Response et signUp req et res
 // pq le role c'est fait ainsi ROLE = 'ROLE'
-// Comment avoir l'erreur 500 pour le signin ? pourquoi l'erreur reste 404
-// Le token comprendre ce que c'est exactement
+// Qu'est ce que le token exactement ?
+// Qu'est ce qu'une reference ?
+// Différence entre restAPI et API
+// timestamps ?
