@@ -29,11 +29,7 @@ const userService = {
     }),
     signUp: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const user = new user_model_1.default(Object.assign(Object.assign({}, req.body), { 
-                // 1234 va remplacer ce password par un password hasher
-                password: userService.hashPassword(req.body.password) }));
-            yield user.save();
-            // manque une secu si le save a echoué
+            const user = yield user_model_1.default.create(Object.assign(Object.assign({}, req.body), { password: userService.hashPassword(req.body.password) }));
             return res.json(user);
         }
         catch (err) {
@@ -50,6 +46,7 @@ const userService = {
     signIn: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const user = yield user_model_1.default.findOne({ email: req.body.email });
+            console.log(user);
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }
@@ -57,10 +54,7 @@ const userService = {
             if (!isValid) {
                 return res.status(401).json({ message: 'Invalid password' });
             }
-            // create a jwt token
-            const token = jsonwebtoken_1.default.sign(
-            // eslint-disable-next-line no-underscore-dangle
-            { id: user._id, role: user.role }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
+            const token = jsonwebtoken_1.default.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET || 'secret', { expiresIn: '15h' });
             return res.json(token);
         }
         catch (err) {
@@ -76,11 +70,19 @@ const userService = {
 exports.default = userService;
 // Qu'est ce qu'une callback ?
 // pq c'est toujours des constantes ?
+// Une constante veut dire fonction/objet/variabe qui ne pourra pas changer
 // il sert a quoi le defaut, pq on met default ?
+// Par défaut sert à rendre le modèle/objet publique pouvoir ensuite l'importer
 // hashSync, bcrypt ?
+// package avec lequel on peut crypter le password du user nous utilions ensuite compare() poour comparer un password hashé et non hashé
 // ...req.body ?
+// spread cela veut dire qu'on aimerait découper notre produit pour pouvoir ensuite le lié à une autre valeur et créer un objet entier
 // erreur 1100 mangoose ?
-// pq c'est getAll ce n'est qu'une Response et signUp req et res
+// Cette peut venir au moment du signUp lorsqu'on a soit la même adresse mail soit le même username en cas d'erreur nous affichons
+// le mail ou le username avec la valeur en utilisant keyvalue[0]
+// pq c'est getAll ce n'est qu'une Response et signUp req et res ?
+// Dans getAll() nous voulons juste récupérer les produits/users et cela se fait avec la promesse find() |qui nous permet de récupérer les
+// objets à partir de la base de donnée
 // pq le role c'est fait ainsi ROLE = 'ROLE'
 // Qu'est ce que le token exactement ?
 // Qu'est ce qu'une reference ?

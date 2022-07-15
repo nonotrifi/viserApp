@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 enum Role {
     ADMIN = 'ADMIN',
-    USER  = 'USER',
+    CLIENT = 'CLIENT',
     PROVIDER = 'PROVIDER'
 }
 

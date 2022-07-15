@@ -1,7 +1,7 @@
 // User mongoose model
 import mongoose from 'mongoose';
 import RoleEnum from "../enums/role.enum";
-
+// User.findById / User.delete etc etc
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,

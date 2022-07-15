@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // User mongoose model
 const mongoose_1 = __importDefault(require("mongoose"));
 const role_enum_1 = __importDefault(require("../enums/role.enum"));
+// User.findById / User.delete etc etc
 const userSchema = new mongoose_1.default.Schema({
     firstName: {
         type: String,

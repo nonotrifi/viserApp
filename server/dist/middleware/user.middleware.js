@@ -17,7 +17,12 @@ const userMiddleware = {
             // on split car il y'a bearer au moment de la validation donc nous ce qui nous intérésse c'est la deuxième position celle du token
             const token = req.headers.authorization.split(" ")[1];
             if (userMiddleware.isValidToken(token)) {
+                // as User pour caster sinon ca renvoi une erreur || User renvoi uniquement le id et rol on besoin que de ces infos
+                // cest le user que je vais extraire du token (id, role)
                 const user = jsonwebtoken_1.default.decode(token);
+                // Si j'initialise pas le req.user ca va afficher une erreur 
+                // console.log('Middleware User before req.user = user : ', req.user)
+                // Si on commente le req.user et on test sur POSTMAN de créer un produit nous verrons que req.user = undefined
                 req.user = user;
                 // go to the next function exemple dans product.route.ts
                 return next();

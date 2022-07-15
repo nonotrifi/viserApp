@@ -22,7 +22,7 @@ const productSchema = new mongoose_1.default.Schema({
         minLength: 3,
     },
     provider: {
-        // on doit ajouter cette ligne pour pouvoir populare "provider" sera la path à mettre en premier paramètre dans serviceProduct
+        // on doit ajouter cette ligne pour pouvoir populate "provider" sera la path à mettre en premier paramètre dans serviceProduct
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
