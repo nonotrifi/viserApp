@@ -2,25 +2,17 @@ import { Request, Response } from 'express';
 import { Schema } from 'mongoose';
 import Product from '../models/product.model';
 
-// Request
-// req... url, params (https://myapp.fr/products?id=123&color=blue), body ({name, desc, price}), query...
-// get({price: 10}) ==> body : { price: 10 }
+/*
 
+*/
 const productService = {
     getProducts: async (res: Response) => {
         try {
             // dans la classe user on a provider, cette classe est référencé a la classe User (ou on peut voir les proprité
             // firstName, lastName, email et role) Nous allons donc les afficher ici en les mettant en deuxième paramètre
             // populate("provider") signifie que quand je vais dans le modèle product
-            /*
-                const user = req.user
-                if (user.role === "Admin") {
-                    await Product.find({})
-                } else {
-                    await Product.find({access: restricted})
-                }
-            */
-            const products = await Product.find().populate('provider', 'firstName lastName email role');
+
+            const products = await Product.find().populate('clientId', 'firstName lastName email role');
             return res.json(products);
         } catch (err) {
             console.log(err);
@@ -31,7 +23,7 @@ const productService = {
         try {
             const product = await Product.findById(req.params.id);  // https://myapp.fr/products?id=123&color=blue (POST / GET) ==> req.params.id req.params.color
             if (!product) {
-                return res.status(401).json( { message: 'Product not found' })
+                return res.status(404).json( { message: 'Product not found' })
             }
             return res.json(product);
         } catch (err) {
@@ -42,15 +34,7 @@ const productService = {
     createProduct: async (req: Request, res: Response) => {
 
         try {
-            // const product = new Product({
-            //     ...req.body, // { name: 'Bicyclette', price: 100, desc: 'Youpi ça roule' } => {...}, provider: '1234' // { name, price, desc, provider}
-            //     provider: req.user.id, // {name, price, desc, provider}
-            // });
-            // await product.save();
-            // pq on a besoin de préciser l'id ? c'est pas déjà fait dans le modèle ?
-            // req.user.id Car le provider n'est pas défini directement nous utiliser justement cette fonction create()
-            // pour pouvoir spécifier le provider
-
+      
             const product = await Product.create({ ...req.body, clientId: req.user.id })
             return res.status(201).json(product); // 201 CREATED
         } catch (err) {
@@ -82,5 +66,17 @@ const productService = {
 
 export default productService;
 
-
+// D'ou est ce qu'on récupère le clientId 
+// Comment se fait exactement la connexion entre la bdd et les request ? 
 // getProducts pq on a qu'une seule erreur ?
+
+
+
+// const product = new Product({
+//     ...req.body, // { name: 'Bicyclette', price: 100, desc: 'Youpi ça roule' } => {...}, provider: '1234' // { name, price, desc, provider}
+    //     provider: req.user.id, // {name, price, desc, provider}
+    // });
+    // await product.save();
+    // pq on a besoin de préciser l'id ? c'est pas déjà fait dans le modèle ?
+    // req.user.id Car le provider n'est pas défini directement nous utiliser justement cette fonction create()
+    // pour pouvoir spécifier le provider

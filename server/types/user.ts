@@ -7,22 +7,9 @@ export type User = {
     id: string;
     role: RoleEnum;
     // email: string,
-    //username: string
+    // username: string
 };
 
-// ca sert a quoi de créer ce user ?
-// pq uniquement l'id et le role ?
 
-/*
 
-interface Boutique {
-    color: string,
-    name: string,
-    size: string
-}
 
-updateEmails(user1: User, user2: User) {
-
-}
-
-*/

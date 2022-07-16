@@ -1,7 +1,6 @@
 enum OrderStatus {
-    PENDING = 'PENDING',
-    COMPLETED = 'COMPLETED',
-    CANCELLED = 'CANCELLED',
+    PENDING = 'Pending',
+    TAKEN = 'Taken',
 }
 
 export default OrderStatus;

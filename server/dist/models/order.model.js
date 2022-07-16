@@ -10,7 +10,7 @@ const order_enum_1 = __importDefault(require("../enums/order.enum"));
 const orderSchema = new mongoose_1.default.Schema({
     products: [
         {
-            product: {
+            productId: {
                 type: mongoose_1.default.Schema.Types.ObjectId,
                 ref: "Product",
                 required: true,
@@ -21,18 +21,22 @@ const orderSchema = new mongoose_1.default.Schema({
             },
         },
     ],
-    user: {
+    clientId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "User",
         required: true,
+    },
+    providerId: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "User",
     },
     status: {
         type: String,
         enum: Object.values(order_enum_1.default),
         default: order_enum_1.default.PENDING,
         required: true,
-    }
+    },
 });
 exports.default = mongoose_1.default.model("Order", orderSchema);
 // Qu'est ce que ca fait quand ca fait ref ?
-//
+//On peut mettrea tant qu'on veut des propriétés dans le modèle tant que required est false c'est bon, si true on aura une erreur

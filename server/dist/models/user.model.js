@@ -43,7 +43,7 @@ const userSchema = new mongoose_1.default.Schema({
     role: {
         type: String,
         enum: Object.values(role_enum_1.default),
-        default: role_enum_1.default.USER,
+        default: role_enum_1.default.CLIENT,
         required: true
     }
 });

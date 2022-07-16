@@ -18,14 +18,18 @@ const userMiddleware = {
             const token = req.headers.authorization.split(" ")[1];
 
             if (userMiddleware.isValidToken(token)) {
-                // as User pour caster sinon ca renvoi une erreur || User renvoi uniquement le id et rol on besoin que de ces infos
+                // as User pour caster sinon ca renvoi une erreur || User renvoi uniquement le id et role on besoin que de ces infos
                 // cest le user que je vais extraire du token (id, role)
                 
                 const user = jsonwebtoken.decode(token) as User;
                 // Si j'initialise pas le req.user ca va afficher une erreur 
-                // console.log('Middleware User before req.user = user : ', req.user)
+                console.log('Middleware User before req.user = user : ', req.user)
+
                 // Si on commente le req.user et on test sur POSTMAN de créer un produit nous verrons que req.user = undefined
                 req.user = user;
+
+                // id et role comme dans l'interface
+                console.log('Middleware User after req.user = user : ', req.user)
                 // go to the next function exemple dans product.route.ts
                return next();
             }
@@ -51,7 +55,16 @@ const userMiddleware = {
             return next();
         }
         return res.status(403).json({message: 'Forbidden'});
+    },
+    isProvider: (req: Request, res: Response, next: NextFunction) => {
+        if(req.user && (req.user.role === RoleEnum.PROVIDER || req.user.role === RoleEnum.ADMIN)){
+            return next();
+        }
+        return res.status(403).json({message: 'Forbidden'});
     }
 }
 
 export default userMiddleware;
+
+
+// A partir du token

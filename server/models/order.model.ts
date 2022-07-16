@@ -6,7 +6,7 @@ import OrderStatusEnum from "../enums/order.enum";
 const orderSchema = new mongoose.Schema({
     products: [
         {
-            product:{
+            productId:{
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Product",
                 required: true,
@@ -31,10 +31,10 @@ const orderSchema = new mongoose.Schema({
         enum: Object.values(OrderStatusEnum),
         default: OrderStatusEnum.PENDING,
         required: true,
-    }
+    },
 });
 
 export default mongoose.model("Order", orderSchema);
 
 // Qu'est ce que ca fait quand ca fait ref ?
-//
+//On peut mettrea tant qu'on veut des propriétés dans le modèle tant que required est false c'est bon, si true on aura une erreur
