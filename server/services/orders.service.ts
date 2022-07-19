@@ -33,11 +33,11 @@ const orderService = {
     createOrder: async (req: Request, res: Response) => {
         try {
       
-            /* Ici après avoir envoyer la requête, grâce au middleware isAuthentiacte() et avec le token je génére ("_id", "role") 
+            /* Ici après avoir envoyer la requête, grâce au middleware isAuthentiacte() et avec le token je génére ("_id", "role")
             la je veux récupèrer l'id du user de type String que je stock dans la variable clientId */
 
             const clientId = req.user.id;
-           
+
             /* Ici je récupère ce que je mets dans mon body lors de l'envoi de la request et j'utilise l'interface IOrderProduct[]
              pouvoir placer plusieurs produits, une interface est un typage qu'on utilise en Typescript,
              ce qu'on met dans le produit dans le body POSTMAN va rentrer dans la constante products;
@@ -46,15 +46,15 @@ const orderService = {
             const products = req.body.products as IOrderProduct[];
 
             console.log(products)
-            
-            /* Je check si le produit n'existe ou si le produit est vide  */
+
+            /* Je check si le produit n'existe pas ou si le produit est vide  */
             if (!products || products.length === 0) {
                 return res.status(400).json({ message: 'The body cannot be empty of products' })
             }
 
-      
-            /* Je créer le nouvel objet order en réunissant products et clientId, j'utilise une méthode native du modèle pour récupèrer 
-            pour récupérer les valeurs du products et le clientId et les mettre en tant qu'objet 
+
+            /* Je créer le nouvel objet order en réunissant products et clientId, j'utilise une méthode native du modèle pour récupèrer
+            pour récupérer les valeurs du products et le clientId et les mettre en tant qu'objet
             */
             const order = await Order.create({ products, clientId })
             
@@ -73,16 +73,16 @@ const orderService = {
     },
 
     // Le demenageur prend un Order d'un client et rajoute son id à l'order
- 
+
     /* Avant chaque requête, le serveur passe par un/des middleware(s), en l'occurence isAuthenticated, qui nous permet
      d'attribuer les infos du user connecté à la variable 'user' de req (req.user = user) */
     takeOrder: async (req: Request, res: Response) => {
         const providerId = req.user.id; // le user connecté (qui fait la request) est un provider (on va le savoir avec le token quand il se connecte)
-     
-        // Le try catch c'est surtout pour attrapper les erreurs, éviter que le server crache a chaque fois 
+
+        // Le try catch c'est surtout pour attrapper les erreurs, éviter que le server crache a chaque fois
         const orderId = req.params.id; // 1234
         try {
-            /* Je vais chercher l'order par rapport à son id et ensuite je vais updater l'ancien objet avec le nouvel objet new : true 
+            /* Je vais chercher l'order par rapport à son id et ensuite je vais updater l'ancien objet avec le nouvel objet new : true
             c'est pour récupérer l'objet updater */
             const order = await Order.findByIdAndUpdate(orderId, { providerId, status: OrderStatus.TAKEN }, {
                  new : true

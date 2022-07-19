@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { Schema } from 'mongoose';
 import Product from '../models/product.model';
 
 /*
@@ -32,9 +31,7 @@ const productService = {
         }
     },
     createProduct: async (req: Request, res: Response) => {
-
         try {
-      
             const product = await Product.create({ ...req.body, clientId: req.user.id })
             return res.status(201).json(product); // 201 CREATED
         } catch (err) {
@@ -66,8 +63,8 @@ const productService = {
 
 export default productService;
 
-// D'ou est ce qu'on récupère le clientId 
-// Comment se fait exactement la connexion entre la bdd et les request ? 
+// D'ou est ce qu'on récupère le clientId
+// Comment se fait exactement la connexion entre la bdd et les request ?
 // getProducts pq on a qu'une seule erreur ?
 
 

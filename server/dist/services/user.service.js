@@ -46,7 +46,6 @@ const userService = {
     signIn: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const user = yield user_model_1.default.findOne({ email: req.body.email });
-            console.log(user);
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }
@@ -65,7 +64,6 @@ const userService = {
     }),
     hashPassword: (password) => bcrypt_1.default.hashSync(password, 10),
     comparePassword: (password, hashedPassword) => __awaiter(void 0, void 0, void 0, function* () { return bcrypt_1.default.compare(password, hashedPassword); })
-    // const inputHash = bcrypt.hash(password) puis if (inputHash === hashedPassword) si true connexion else pas connexion
 };
 exports.default = userService;
 // Qu'est ce qu'une callback ?

@@ -13,16 +13,10 @@ const PORT = process.env.PORT || 3000;
 // création d'une application
 const app = express();
 
-// points de départ de mon app 
+// points de départ de mon app
 app.use(express.json());
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-  });
 
-// Définitions des différents chemins possibles des différentes requêtes
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
 app.use('/api/orders', orderRouter);

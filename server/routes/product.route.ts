@@ -10,5 +10,5 @@ router.post('/',userMiddleware.isAuthenticated, userMiddleware.isClient, product
 router.put('/:id', userMiddleware.isAuthenticated, userMiddleware.isClient,productController.update);
 router.delete('/:id', userMiddleware.isAuthenticated, userMiddleware.isClient, productController.delete);
 
-// j'exporte router pour pouvoir l'utiliser dans index.ts ou je vais l'importer
 export default router;
+

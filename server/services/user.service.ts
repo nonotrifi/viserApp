@@ -9,7 +9,6 @@ import Product from "../models/product.model";
 const userService = {
     getAll: async (res: Response) => {
         try {
-
             const users = await User.find();
             return res.json(users);
         } catch (err){
@@ -41,7 +40,7 @@ const userService = {
     signIn: async (req: Request, res: Response) => {
         try {
             const user = await User.findOne({ email: req.body.email });
-            console.log(user);
+
             if (!user) {
                 return res.status(404).json({message: 'User not found'});
             }
@@ -61,7 +60,7 @@ const userService = {
                 { expiresIn: '15h' },
             );
             return res.json(token);
-        } catch (err){
+        } catch (err) {
             console.log(err);
             return res.status(500).json({ message: 'Server error'});
         };
@@ -71,7 +70,6 @@ const userService = {
         password: string,
         hashedPassword: string,
     ): Promise<boolean> => bcrypt.compare(password, hashedPassword)
-    // const inputHash = bcrypt.hash(password) puis if (inputHash === hashedPassword) si true connexion else pas connexion
 };
 
 export default userService;

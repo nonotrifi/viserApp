@@ -77,8 +77,8 @@ const productService = {
     })
 };
 exports.default = productService;
-// D'ou est ce qu'on récupère le clientId 
-// Comment se fait exactement la connexion entre la bdd et les request ? 
+// D'ou est ce qu'on récupère le clientId
+// Comment se fait exactement la connexion entre la bdd et les request ?
 // getProducts pq on a qu'une seule erreur ?
 // const product = new Product({
 //     ...req.body, // { name: 'Bicyclette', price: 100, desc: 'Youpi ça roule' } => {...}, provider: '1234' // { name, price, desc, provider}

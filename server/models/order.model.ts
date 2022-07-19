@@ -1,7 +1,6 @@
-// order model
+
 import mongoose from "mongoose";
 import OrderStatusEnum from "../enums/order.enum";
-// import { Product } from "./product.model";
 
 const orderSchema = new mongoose.Schema({
     products: [
@@ -36,5 +35,3 @@ const orderSchema = new mongoose.Schema({
 
 export default mongoose.model("Order", orderSchema);
 
-// Qu'est ce que ca fait quand ca fait ref ?
-//On peut mettrea tant qu'on veut des propriétés dans le modèle tant que required est false c'est bon, si true on aura une erreur

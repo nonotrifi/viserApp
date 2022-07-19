@@ -51,7 +51,7 @@ const orderService = {
             */
             const products = req.body.products;
             console.log(products);
-            /* Je check si le produit n'existe ou si le produit est vide  */
+            /* Je check si le produit n'existe pas ou si le produit est vide  */
             if (!products || products.length === 0) {
                 return res.status(400).json({ message: 'The body cannot be empty of products' });
             }
@@ -76,7 +76,7 @@ const orderService = {
      d'attribuer les infos du user connecté à la variable 'user' de req (req.user = user) */
     takeOrder: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const providerId = req.user.id; // le user connecté (qui fait la request) est un provider (on va le savoir avec le token quand il se connecte)
-        // Le try catch c'est surtout pour attrapper les erreurs, éviter que le server crache a chaque fois 
+        // Le try catch c'est surtout pour attrapper les erreurs, éviter que le server crache a chaque fois
         const orderId = req.params.id; // 1234
         try {
             /* Je vais chercher l'order par rapport à son id et ensuite je vais updater l'ancien objet avec le nouvel objet new : true
